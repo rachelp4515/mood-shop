@@ -5,10 +5,13 @@ body {
     margin: 0;
 }
 .page-header {
+    font-size: medium;
+    padding: 20px;
 	display: flex;
+    border: 2px solid orange;
 	flex-direction: row;
     justify-content: space-between;
-    background-color: bisque;
+    background-color: rgb(255, 252, 75);
 }
 .page-header ul {
     display: flex;
