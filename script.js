@@ -69,5 +69,18 @@ function getQty(){
 	}
 	return qty
 }
-	
 console.log(`total price: $${total.toFixed(2)}`)
+
+function removeFunction(name, qty = 0){
+	for( let i = 0; i < cart.length; i += 1)
+		if(cart[i].name === name){
+			if(qty = 0){
+				cart[i].qty -= 1
+			}
+			if(cart[i].qty < 1 || qty === 0 ){
+			cart.spice(i, 1)	
+			}
+			return
+		} 
+}
+
