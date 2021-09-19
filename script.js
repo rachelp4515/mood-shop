@@ -30,8 +30,15 @@ for (let i = 0; i < data.length; i += 1) {
 	button.innerHTML = "Add to Cart"
 	newDiv.appendChild(button)
 }
+
 const cart = []
 function addItem(name, price){
+	for (let i = 0; i < cart.length; i += 1){
+		if (cart[i].name === name) {
+			cart[i].qty += 1
+			return
+		}
+	}
 	const item= {
 		name:name,
 		price:price,
@@ -40,9 +47,27 @@ function addItem(name, price){
 	cart.push(item)
 }
 
-addItem('food', 'too much')
+addItem('food', 100000)
+addItem('more food', 10000000)
 
 function showItems(){
-	console.log(cart[0])
+	console.log(`quantity: ${getQty()}`)
+	for (let i = 0; i < cart.length; i += 1){
+		console.log(`${cart[i].name} ${cart[i].price} x ${cart[i].qty}`)
+	}
 }
+
 showItems()
+let total = 0
+for (let i = 0; i < cart.length; i += 1){
+	total += cart[i].price * cart[i].qty
+}
+function getQty(){
+	let qty = 0
+	for (let i = 0; i < cart.length; i+= 1){
+		qty += cart[i].qty
+	}
+	return qty
+}
+	
+console.log(`total price: $${total.toFixed(2)}`)
