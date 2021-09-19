@@ -30,4 +30,19 @@ for (let i = 0; i < data.length; i += 1) {
 	button.innerHTML = "Add to Cart"
 	newDiv.appendChild(button)
 }
+const cart = []
+function addItem(name, price){
+	const item= {
+		name:name,
+		price:price,
+		qty:1,
+	}
+	cart.push(item)
+}
 
+addItem('food', 'too much')
+
+function showItems(){
+	console.log(cart[0])
+}
+showItems()
