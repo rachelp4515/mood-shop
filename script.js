@@ -1,7 +1,11 @@
 import data from './data.js'
 const itemsContainer = document.querySelector('#items')
+const itemList = document.getElementById('item-list')
+const cartQty = document.getElementById('cart-qty')
+const cartTotal = document.getElementById('cart-total')
 
 
+//putting in the divs with the images and descriptions 
 for (let i = 0; i < data.length; i += 1) {
 	const newDiv = document.createElement('div');
 	newDiv.className = 'item'
@@ -12,7 +16,6 @@ for (let i = 0; i < data.length; i += 1) {
 	img.height = 300
 
 	newDiv.appendChild(img)
-	console.log(img) 
 	itemsContainer.appendChild(newDiv)
 
     const description = document.createElement('P')
@@ -31,6 +34,15 @@ for (let i = 0; i < data.length; i += 1) {
 	newDiv.appendChild(button)
 }
 
+const all_items_button = Array.from(document.querySelectorAll("button"))
+
+all_items_button.forEach(elt => elt.addEventListener('click', () => {
+	console.log(elt)
+	addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
+	showItems()
+}))
+
+//----------creating the cart and items------------------
 const cart = []
 function addItem(name, price){
 	for (let i = 0; i < cart.length; i += 1){
@@ -39,29 +51,38 @@ function addItem(name, price){
 			return
 		}
 	}
-	const item= {
-		name:name,
-		price:price,
-		qty:1,
-	}
+	const item = { name, price, qty:1 }
 	cart.push(item)
 }
 
 addItem('food', 100000)
 addItem('more food', 10000000)
+addItem('a single slice of cheese', 7.95)
+addItem('an additional slice of cheese', 4.99)
 
+//------show items --------------------
 function showItems(){
-	console.log(`quantity: ${getQty()}`)
+	total()
+	let itemStr = ''
 	for (let i = 0; i < cart.length; i += 1){
-		console.log(`${cart[i].name} ${cart[i].price} x ${cart[i].qty}`)
+		const {name, price, qty} = cart[i]
+		itemStr += `<li> ${name} $${price} x ${qty} = ${qty * price} </li>`   
+	}
+	itemList.innerHTML = itemStr
+}
+showItems()
+
+//---------------total cost in cart---------
+function total(){
+	let total = 0
+	for (let i = 0; i < cart.length; i += 1){
+	total += cart[i].price * cart[i].qty
+	cartTotal.innerHTML = `total price: $${total.toFixed(2)}`
 	}
 }
+total()
 
-showItems()
-let total = 0
-for (let i = 0; i < cart.length; i += 1){
-	total += cart[i].price * cart[i].qty
-}
+// -------------quantyity ---------------
 function getQty(){
 	let qty = 0
 	for (let i = 0; i < cart.length; i+= 1){
@@ -69,8 +90,9 @@ function getQty(){
 	}
 	return qty
 }
-console.log(`total price: $${total.toFixed(2)}`)
+cartQty.innerHTML = `quantity: ${getQty()}`
 
+//------------------removing item(s) from cart ----------
 function removeFunction(name, qty = 0){
 	for( let i = 0; i < cart.length; i += 1)
 		if(cart[i].name === name){
@@ -81,6 +103,5 @@ function removeFunction(name, qty = 0){
 			cart.spice(i, 1)	
 			}
 			return
-		} 
+		}
 }
-
